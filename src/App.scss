@@ -1,0 +1,133 @@
+@import './index.scss';
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.border {
+    border-radius: 10px;
+    width: 500px;
+    height: 500px;
+    border: 10px solid #d5884e;
+    background-color: #d5884e;
+    box-shadow: 0 0px 8px rgba($color: #000000, $alpha: .8);
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+    background-color: white;
+    box-shadow: inset 3px 3px 3px rgba($color: #000000, $alpha: 0.8),
+        inset -3px -3px 3px rgba($color: #000000, $alpha: 0.8);
+    padding: 3px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    background-color: $dark-brown;
+    grid-template-areas:
+        ". . . ."
+        ". . . ."
+        ". . . ."
+        ". . . .";
+
+    span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: white;
+        box-shadow: inset 0 0 3px rgba($color: #833000, $alpha: 0.8);
+        border: 3px solid $dark-brown;
+        font-size: 50px;
+        color: $brown;
+        font-weight: bolder;
+        cursor: pointer;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        transition: 1s all ease;
+    }
+
+    span.empty-space {
+        border: none;
+        background-color: $dark-brown;
+        box-shadow: inset 0 0 3px rgba($color: #000000, $alpha: .8);
+        cursor: inherit;
+        transition: 0.5s all ease;
+    }
+}
+
+.container {
+    span:first-child {
+        border-top-left-radius: 7px;
+    }
+
+    span:nth-child(4) {
+        border-top-right-radius: 7px;
+    }
+
+    span:nth-child(13) {
+        border-bottom-left-radius: 7px;
+    }
+
+    span:nth-child(16) {
+        border-bottom-right-radius: 7px;
+    }
+}
+
+.left {
+    animation: left 0.1s linear 0s;
+    animation-fill-mode: both;
+}
+
+.bottom {
+    animation: bottom 0.1s linear 0s;
+    animation-fill-mode: both;
+}
+.right {
+    animation: right 0.1s linear 0s;
+    animation-fill-mode: both;
+}
+.top {
+    animation: top 0.1s linear 0s;
+    animation-fill-mode: both;
+}
+
+
+@keyframes bottom {
+    from {
+        transform: translate(0, 0);
+    }
+    to {
+        transform: translate(0, 100%);
+    }
+}
+
+@keyframes right {
+    from {
+        transform: translate(0, 0);
+    }
+    to {
+        transform: translate(100%, 0);
+    }
+}
+
+@keyframes left {
+    from {
+        transform: translate(0, 0);
+    }
+    to {
+        transform: translate(-100%, 0);
+    }
+}
+
+@keyframes top {
+    from {
+        transform: translate(0, 0);
+    }
+    to {
+        transform: translate(0, -50%);
+    }
+}
