@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react'
 import './App.scss'
+import Stopwatch from './stopwatch';
 
 function App() {
   const [puzzle, setPuzzle] = useState<(Array<any>)[]>([]);
   const [direction, setDirection] = useState<string>('')
   const [activeIndex, setActiveIndex] = useState<number[]>([])
+  const [isWin, setIsWin] = useState<Boolean>(false)
+  const [resetStopwatch, setResetStopwatch] = useState<boolean>(false)
 
-  useEffect(() => {
+  function scramble() {
     let numbers = Array.from({ length: 15 }, (_, i) => {
       return i + 1
     })
@@ -27,16 +30,41 @@ function App() {
     randomArrayNumber.push('')
     result.push(randomArrayNumber)
     setPuzzle(result)
+  }
+
+  useEffect(() => {
+    let numbers = Array.from({ length: 15 }, (_, i) => {
+      return i + 1
+    })
+
+    let test: any[] = [
+      [1, 2, 3, 4],
+      [5, 6, 7, 8],
+      [9, 10, 11, 12],
+      [13, 14, '', 15]
+    ]
+
+    let randomArrayNumber: Array<any> = []
+    let result: Array<any> = []
+
+    for (let i = 0; i < 15; i++) {
+      let temp
+      let randomNumber = Math.floor(Math.random() * numbers.length)
+      temp = numbers.splice(randomNumber, 1)[0]
+      randomArrayNumber.push(temp)
+      if (randomArrayNumber.length === 4) {
+        result.push(randomArrayNumber)
+        randomArrayNumber = []
+      }
+    }
+    randomArrayNumber.push('')
+    result.push(randomArrayNumber)
+    setPuzzle(test)
   }, [])
 
   function handleclick(index1: number, index2: number): void {
+    if (isWin) return
     let puzzleArea = [...puzzle]
-    let correctPuzzle:any = Array.from({ length: 4 }, (_, i) => {
-      return Array.from({length: 4}, (_, k) => {
-        return i*4+k+1
-      })
-    })
-    correctPuzzle[3][3] = ''
 
     function move(direction: 'top' | 'left' | 'right' | 'bottom') {
       setActiveIndex([index1, index2])
@@ -77,28 +105,52 @@ function App() {
     else if (puzzleArea[index1] && typeof puzzleArea[index1][index2 - 1] === 'string') {
       move('left')
     }
-
-    if (correctPuzzle === puzzleArea) {
-      console.log('menang')
-    }
-    console.log(correctPuzzle, puzzleArea)
   }
+
+  function reset(): void {
+    scramble()
+    setIsWin(false)
+    setResetStopwatch(true)
+    setTimeout(() => {
+      setResetStopwatch(false)
+    }, 100)
+  }
+
+  useEffect(() => {
+    let correctPuzzle: any[][] = Array.from({ length: 4 }, (_, i) => {
+      return Array.from({ length: 4 }, (_, k) => {
+        return i * 4 + k + 1
+      })
+    })
+    correctPuzzle[3][3] = ''
+    if (JSON.stringify(correctPuzzle) === JSON.stringify(puzzle)) {
+      setIsWin(true)
+    }
+  }, [puzzle]);
 
   return (
     <div className='center'>
+      <h1>STACKUN</h1>
       <div className="border">
         <div className="container">
           {puzzle.map((el, index1) => {
             return el.map((el1, index2) => {
-              if (typeof el1 === 'string') return <span key={el1} className='empty-space'></span>
+              if (isWin) {
+                if (typeof el1 === 'string') return <span key={el1}>&#8862;</span>
+              } else {
+                if (typeof el1 === 'string') return <span key={el1} className='empty-space'></span>
+              }
               if (index1 === activeIndex[0] && index2 === activeIndex[1]) {
                 return <span key={el1} className={direction} onClick={() => handleclick(index1, index2)}>{el1}</span>
               }
               return <span key={el1} onClick={() => handleclick(index1, index2)}>{el1}</span>
             })
           })}
-          {/* <span className='empty-space'></span> */}
         </div>
+      </div>
+      <div className="bottom-content">
+        <Stopwatch reset={resetStopwatch} isRunning={!isWin} />
+        {isWin && <button onClick={reset}>Reset</button>}
       </div>
 
     </div>
