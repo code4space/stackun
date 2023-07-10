@@ -37,13 +37,6 @@ function App() {
       return i + 1
     })
 
-    let test: any[] = [
-      [1, 2, 3, 4],
-      [5, 6, 7, 8],
-      [9, 10, 11, 12],
-      [13, 14, '', 15]
-    ]
-
     let randomArrayNumber: Array<any> = []
     let result: Array<any> = []
 
@@ -59,7 +52,7 @@ function App() {
     }
     randomArrayNumber.push('')
     result.push(randomArrayNumber)
-    setPuzzle(test)
+    setPuzzle(result)
   }, [])
 
   function handleclick(index1: number, index2: number): void {
