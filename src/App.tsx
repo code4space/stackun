@@ -167,7 +167,7 @@ function App() {
               if (isWin) {
                 if (typeof el1 === 'string') return <span key={el1}>&#8862;</span>
               } else {
-                if (typeof el1 === 'string') return <input key={el1} className='empty-space' onKeyDown={(e) => handleKeyPress(index1, index2, e)} tabIndex={0} autoFocus />
+                if (typeof el1 === 'string') return <button key={el1} className='empty-space' onKeyDown={(e) => handleKeyPress(index1, index2, e)} tabIndex={0} autoFocus />
               }
               if (index1 === activeIndex[0] && index2 === activeIndex[1]) {
                 return <span key={el1} className={direction} onClick={() => handleclick(index1, index2)} ref={containerRef}>{el1}</span>
@@ -185,7 +185,7 @@ function App() {
       <div className="joy-stick">
         <span style={{ transform: 'rotate(180deg)' }} onClick={() => handleKeyPress(activeIndex[0], activeIndex[1], { key: 'ArrowLeft' })}>&#10148;</span>
         <div>
-          <span style={{ transform: 'rotate(-90deg)' }} onClick={() => handleKeyPress(activeIndex[0], activeIndex[1], { key: 'ArrowTop' })}>&#10148;</span>
+          <span style={{ transform: 'rotate(-90deg)' }} onClick={() => handleKeyPress(activeIndex[0], activeIndex[1], { key: 'ArrowUp' })}>&#10148;</span>
           <span style={{ transform: 'rotate(90deg)' }} onClick={() => handleKeyPress(activeIndex[0], activeIndex[1], { key: 'ArrowDown' })}>&#10148;</span>
         </div>
         <span onClick={() => handleKeyPress(activeIndex[0], activeIndex[1], { key: 'ArrowRight' })}>&#10148;</span>
