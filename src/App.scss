@@ -5,7 +5,7 @@
     justify-content: center;
     align-items: center;
     width: 100vw;
-    height: 100vh;
+    height: 100dvh;
     background-image: url(./assets/wood.jpg);
     background-repeat: no-repeat;
     background-size: cover;
@@ -62,12 +62,14 @@
         transition: 1s all ease;
     }
 
-    span.empty-space {
+    .empty-space {
         border: none;
         background-color: $dark-brown;
         box-shadow: inset 0 0 3px rgba($color: #000000, $alpha: .8);
         cursor: inherit;
         transition: 0.5s all ease;
+        width: 100%;
+        height: 100%;
     }
 }
 
@@ -181,6 +183,42 @@
     box-shadow: 0px 0px 3px rgba($color: #000000, $alpha: .8),
         inset 2px 2px 0 rgba($color: #000000, $alpha: .8),
         inset -2px -2px 0 rgba($color: #000000, $alpha: .8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.joy-stick {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;
+    position: absolute;
+    bottom: 5dvh;
+    opacity: 0.5;
+
+    div {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    span {
+        border: 3px solid #58250d;
+        background-color: #58250d;
+        padding: 5px;
+        color: white;
+        font-size: 15px;
+        border-radius: 6px;
+        box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5);
+        cursor: pointer;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
 }
 
 @media only screen and (max-width: 600px) {
@@ -195,6 +233,10 @@
 
     .container span {
         font-size: 25px;
+    }
+
+    .stopwatch {
+        font-size: 10px;
     }
 }
 
@@ -213,4 +255,3 @@
         border: 1px solid #482713;
     }
 }
-
