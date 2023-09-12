@@ -10,49 +10,55 @@ function App() {
   const [resetStopwatch, setResetStopwatch] = useState<boolean>(false)
 
   function scramble() {
-    let numbers = Array.from({ length: 15 }, (_, i) => {
-      return i + 1
-    })
+    let array = [
+      [1, 2, 3, 4],
+      [5, 6, 7, 8],
+      [9, 10, 11, 12],
+      [13, 14, 15, '']
+    ]
 
-    let randomArrayNumber: Array<any> = []
-    let result: Array<any> = []
-
-    for (let i = 0; i < 15; i++) {
-      let temp
-      let randomNumber = Math.floor(Math.random() * numbers.length)
-      temp = numbers.splice(randomNumber, 1)[0]
-      randomArrayNumber.push(temp)
-      if (randomArrayNumber.length === 4) {
-        result.push(randomArrayNumber)
-        randomArrayNumber = []
+    let i = 50
+    while (i > 0) {
+      const random = Math.ceil(Math.random() * 4),
+        findEmpty = array.flat().findIndex(el => el === ''),
+        indexY = Math.floor(findEmpty / 4),
+        indexX = findEmpty % 4
+      switch (random) {
+        case 1:
+          if (array[indexY][indexX - 1]) {
+            [array[indexY][indexX - 1], array[indexY][indexX]] = [array[indexY][indexX], array[indexY][indexX - 1]]
+            i--
+          }
+          break;
+        case 2:
+          if (array[indexY][indexX + 1]) {
+            [array[indexY][indexX + 1], array[indexY][indexX]] = [array[indexY][indexX], array[indexY][indexX + 1]]
+            i--
+          }
+          break;
+        case 3:
+          if (array[indexY - 1][indexX]) {
+            [array[indexY - 1][indexX], array[indexY][indexX]] = [array[indexY][indexX], array[indexY - 1][indexX]]
+            i--
+          }
+          break;
+        case 4:
+          if (array[indexY + 1][indexX]) {
+            [array[indexY + 1][indexX], array[indexY][indexX]] = [array[indexY][indexX], array[indexY + 1][indexX]]
+            i--
+          }
+          break;
+        default:
+          break;
       }
     }
-    randomArrayNumber.push('')
-    result.push(randomArrayNumber)
-    setPuzzle(result)
+    setPuzzle(array)
   }
 
+  console.log(puzzle)
+
   useEffect(() => {
-    let numbers = Array.from({ length: 15 }, (_, i) => {
-      return i + 1
-    })
-
-    let randomArrayNumber: Array<any> = []
-    let result: Array<any> = []
-
-    for (let i = 0; i < 15; i++) {
-      let temp
-      let randomNumber = Math.floor(Math.random() * numbers.length)
-      temp = numbers.splice(randomNumber, 1)[0]
-      randomArrayNumber.push(temp)
-      if (randomArrayNumber.length === 4) {
-        result.push(randomArrayNumber)
-        randomArrayNumber = []
-      }
-    }
-    randomArrayNumber.push('')
-    result.push(randomArrayNumber)
-    setPuzzle(result)
+    scramble()
   }, [])
 
   function handleclick(index1: number, index2: number): void {
