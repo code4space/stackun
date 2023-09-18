@@ -10,7 +10,6 @@ function App() {
   const [resetStopwatch, setResetStopwatch] = useState<boolean>(false)
   const [countMove, setCountMove] = useState<number>(0)
 
-  console.log(activeIndex)
   function scramble() {
     let array = [
       [1, 2, 3, 4],
@@ -19,7 +18,7 @@ function App() {
       [13, 14, 15, '']
     ]
 
-    let i = 100
+    let i = 150
     while (i > 0) {
       const random = Math.ceil(Math.random() * 4),
         findEmpty = array.flat().findIndex(el => el === ''),
@@ -56,10 +55,20 @@ function App() {
   }
 
   const containerRef: any = useRef(null);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     scramble()
     containerRef.current?.focus();
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, [])
 
   function handleclick(index1: number, index2: number): void {
@@ -182,14 +191,16 @@ function App() {
         <div className='stopwatch'>Move: {countMove}</div>
         {isWin && <button onClick={reset}>Reset</button>}
       </div>
-      <div className="joy-stick">
-        <span style={{ transform: 'rotate(180deg)' }} onClick={() => handleKeyPress(activeIndex[0], activeIndex[1], { key: 'ArrowLeft' })}>&#10148;</span>
-        <div>
-          <span style={{ transform: 'rotate(-90deg)' }} onClick={() => handleKeyPress(activeIndex[0], activeIndex[1], { key: 'ArrowUp' })}>&#10148;</span>
-          <span style={{ transform: 'rotate(90deg)' }} onClick={() => handleKeyPress(activeIndex[0], activeIndex[1], { key: 'ArrowDown' })}>&#10148;</span>
+      {
+        screenWidth <= 600 && <div className="joy-stick">
+          <span style={{ transform: 'rotate(180deg)' }} onClick={() => handleKeyPress(activeIndex[0], activeIndex[1], { key: 'ArrowLeft' })}>&#10148;</span>
+          <div>
+            <span style={{ transform: 'rotate(-90deg)' }} onClick={() => handleKeyPress(activeIndex[0], activeIndex[1], { key: 'ArrowUp' })}>&#10148;</span>
+            <span style={{ transform: 'rotate(90deg)' }} onClick={() => handleKeyPress(activeIndex[0], activeIndex[1], { key: 'ArrowDown' })}>&#10148;</span>
+          </div>
+          <span onClick={() => handleKeyPress(activeIndex[0], activeIndex[1], { key: 'ArrowRight' })}>&#10148;</span>
         </div>
-        <span onClick={() => handleKeyPress(activeIndex[0], activeIndex[1], { key: 'ArrowRight' })}>&#10148;</span>
-      </div>
+      }
 
     </div>
   )
